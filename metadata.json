@@ -1,0 +1,6 @@
+{
+  "name": "GnduRegister",
+  "description": "Offline attendance management app for Guru Nanak Dev University (GNDU) classrooms.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

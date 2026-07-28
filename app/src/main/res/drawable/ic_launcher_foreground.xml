@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Outer Golden Ring -->
+    <path
+        android:fillColor="#E5A93C"
+        android:pathData="M54,23 C36.88,23 23,36.88 23,54 C23,71.12 36.88,85 54,85 C71.12,85 85,71.12 85,54 C85,36.88 71.12,23 54,23 Z M54,26.5 C69.19,26.5 81.5,38.81 81.5,54 C81.5,69.19 69.19,81.5 54,81.5 C38.81,81.5 26.5,69.19 26.5,54 C26.5,38.81 38.81,26.5 54,26.5 Z" />
+
+    <!-- Inner Seal Blue Fill -->
+    <path
+        android:fillColor="#0F3260"
+        android:pathData="M54,26.5 C69.19,26.5 81.5,38.81 81.5,54 C81.5,69.19 69.19,81.5 54,81.5 C38.81,81.5 26.5,69.19 26.5,54 C26.5,38.81 38.81,26.5 54,26.5 Z" />
+
+    <!-- Inner Dotted Gold Accent Circle -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#F9C74F"
+        android:strokeWidth="1.2"
+        android:pathData="M54,30 C67.25,30 78,40.75 78,54 C78,67.25 67.25,78 54,78 C40.75,78 30,67.25 30,54 C30,40.75 40.75,30 54,30 Z" />
+
+    <!-- Flame of Knowledge (Top center of emblem) -->
+    <path
+        android:fillColor="#F39C12"
+        android:pathData="M54,36 C54,36 58,41 54,45 C50,41 54,36 54,36 Z" />
+
+    <!-- Open Book / Shield Symbol (Center) -->
+    <path
+        android:fillColor="#F9C74F"
+        android:pathData="M54,46 C48,44 40,46 40,46 L40,62 C40,62 48,60 54,63 C60,60 68,62 68,62 L68,46 C68,46 60,44 54,46 Z" />
+    
+    <!-- Book Center Line divider -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#0F3260"
+        android:strokeWidth="1.5"
+        android:pathData="M54,46 L54,63" />
+
+    <!-- Arch Seal Base Stand -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#E5A93C"
+        android:strokeWidth="2"
+        android:pathData="M35,68 C40,73 68,73 73,68" />
+
+    <!-- Attendance Register Checkmark Badge Overlay (Bottom Right) -->
+    <path
+        android:fillColor="#4CAF50"
+        android:pathData="M72,66 C72,60.48 67.52,56 62,56 C56.48,56 52,60.48 52,66 C52,71.52 56.48,76 62,76 C67.52,76 72,71.52 72,66 Z" />
+    
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M58,66 L61,69 L67,63 L68.5,64.5 L61,72 L56.5,67.5 Z" />
+
+</vector>
