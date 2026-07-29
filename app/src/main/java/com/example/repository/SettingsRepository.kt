@@ -29,7 +29,7 @@ class SettingsRepository(private val context: Context) {
     }
 
     val dynamicColor: Flow<Boolean> = context.dataStore.data.map { prefs ->
-        prefs[DYNAMIC_COLOR_KEY] ?: true
+        prefs[DYNAMIC_COLOR_KEY] ?: false
     }
 
     suspend fun setThemeMode(mode: ThemeMode) {

@@ -5,54 +5,50 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Outer Golden Ring -->
+    <!-- Outer Yellow Gold Ring -->
     <path
-        android:fillColor="#E5A93C"
-        android:pathData="M54,23 C36.88,23 23,36.88 23,54 C23,71.12 36.88,85 54,85 C71.12,85 85,71.12 85,54 C85,36.88 71.12,23 54,23 Z M54,26.5 C69.19,26.5 81.5,38.81 81.5,54 C81.5,69.19 69.19,81.5 54,81.5 C38.81,81.5 26.5,69.19 26.5,54 C26.5,38.81 38.81,26.5 54,26.5 Z" />
+        android:fillColor="#F5B000"
+        android:pathData="M54,18 C34.12,18 18,34.12 18,54 C18,73.88 34.12,90 54,90 C73.88,90 90,73.88 90,54 C90,34.12 73.88,18 54,18 Z M54,22 C71.67,22 86,36.33 86,54 C86,71.67 71.67,86 54,86 C36.33,86 22,71.67 22,54 C22,36.33 36.33,22 54,22 Z" />
 
-    <!-- Inner Seal Blue Fill -->
+    <!-- Inner Sky Blue Seal Fill -->
     <path
-        android:fillColor="#0F3260"
-        android:pathData="M54,26.5 C69.19,26.5 81.5,38.81 81.5,54 C81.5,69.19 69.19,81.5 54,81.5 C38.81,81.5 26.5,69.19 26.5,54 C26.5,38.81 38.81,26.5 54,26.5 Z" />
+        android:fillColor="#008CCB"
+        android:pathData="M54,22 C71.67,22 86,36.33 86,54 C86,71.67 71.67,86 54,86 C36.33,86 22,71.67 22,54 C22,36.33 36.33,22 54,22 Z" />
 
-    <!-- Inner Dotted Gold Accent Circle -->
+    <!-- Central Gold Temple Archway -->
     <path
-        android:fillColor="#00000000"
-        android:strokeColor="#F9C74F"
-        android:strokeWidth="1.2"
-        android:pathData="M54,30 C67.25,30 78,40.75 78,54 C78,67.25 67.25,78 54,78 C40.75,78 30,67.25 30,54 C30,40.75 40.75,30 54,30 Z" />
+        android:fillColor="#003D75"
+        android:strokeColor="#FFCC00"
+        android:strokeWidth="2.5"
+        android:pathData="M38,72 L38,45 C38,36 44,28 54,28 C64,28 70,36 70,45 L70,72 Z" />
 
-    <!-- Flame of Knowledge (Top center of emblem) -->
+    <!-- Illuminated Lamp Flame inside Arch -->
     <path
-        android:fillColor="#F39C12"
-        android:pathData="M54,36 C54,36 58,41 54,45 C50,41 54,36 54,36 Z" />
+        android:fillColor="#FF9500"
+        android:pathData="M54,34 C54,34 58,40 54,44 C50,40 54,34 54,34 Z" />
 
-    <!-- Open Book / Shield Symbol (Center) -->
+    <!-- Open White Book at Arch Base -->
     <path
-        android:fillColor="#F9C74F"
-        android:pathData="M54,46 C48,44 40,46 40,46 L40,62 C40,62 48,60 54,63 C60,60 68,62 68,62 L68,46 C68,46 60,44 54,46 Z" />
-    
-    <!-- Book Center Line divider -->
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#FFCC00"
+        android:strokeWidth="1"
+        android:pathData="M42,60 L66,60 L66,70 L42,70 Z" />
+
+    <!-- Bottom University Navy Ribbon -->
     <path
-        android:fillColor="#00000000"
-        android:strokeColor="#0F3260"
+        android:fillColor="#003D75"
+        android:strokeColor="#F5B000"
         android:strokeWidth="1.5"
-        android:pathData="M54,46 L54,63" />
+        android:pathData="M24,74 L84,74 L80,84 L28,84 Z" />
 
-    <!-- Arch Seal Base Stand -->
+    <!-- Checkmark Badge for Attendance App overlay -->
     <path
-        android:fillColor="#00000000"
-        android:strokeColor="#E5A93C"
-        android:strokeWidth="2"
-        android:pathData="M35,68 C40,73 68,73 73,68" />
-
-    <!-- Attendance Register Checkmark Badge Overlay (Bottom Right) -->
-    <path
-        android:fillColor="#4CAF50"
-        android:pathData="M72,66 C72,60.48 67.52,56 62,56 C56.48,56 52,60.48 52,66 C52,71.52 56.48,76 62,76 C67.52,76 72,71.52 72,66 Z" />
+        android:fillColor="#2E7D32"
+        android:pathData="M76,68 C76,62.48 71.52,58 66,58 C60.48,58 56,62.48 56,68 C56,73.52 60.48,78 66,78 C71.52,78 76,73.52 76,68 Z" />
     
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M58,66 L61,69 L67,63 L68.5,64.5 L61,72 L56.5,67.5 Z" />
+        android:pathData="M62,68 L65,71 L71,65 L72.5,66.5 L65,74 L60.5,69.5 Z" />
 
 </vector>
+
