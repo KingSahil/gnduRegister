@@ -58,7 +58,7 @@ abstract class AppDatabase : RoomDatabase() {
                 super.onOpen(db)
                 INSTANCE?.let { database ->
                     scope.launch(Dispatchers.IO) {
-                        seedDatabase(database.studentDao(), database.subjectDao())
+                        database.subjectDao().deleteDuplicates()
                     }
                 }
             }

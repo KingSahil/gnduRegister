@@ -30,4 +30,7 @@ interface SubjectDao {
 
     @Query("SELECT COUNT(*) FROM subjects")
     suspend fun getSubjectCount(): Int
+
+    @Query("DELETE FROM subjects WHERE id NOT IN (SELECT MIN(id) FROM subjects GROUP BY LOWER(TRIM(name)), semester)")
+    suspend fun deleteDuplicates()
 }

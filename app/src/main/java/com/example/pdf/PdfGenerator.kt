@@ -19,6 +19,7 @@ object PdfGenerator {
     fun generatePdf(
         context: Context,
         date: String,
+        subject: String = "",
         semester: String,
         section: String,
         group: String,
@@ -78,11 +79,12 @@ object PdfGenerator {
         val semText = if (semester.startsWith("Sem")) semester else "Sem $semester"
         val secText = if (section.startsWith("Section")) section else "Section $section"
         val groupText = if (group.isEmpty() || group == "All Groups" || group == "All") "All Groups" else group
+        val subjectText = if (subject.isNotBlank()) subject else "N/A"
 
         canvas.drawText("Date: $formattedDate", 30f, yPos, headerPaint)
         canvas.drawText("Class: B.Tech CSE $semText", (pageWidth - 240).toFloat(), yPos, headerPaint)
         yPos += 18f
-        canvas.drawText("Semester: $semText", 30f, yPos, headerPaint)
+        canvas.drawText("Subject: $subjectText", 30f, yPos, headerPaint)
         canvas.drawText("Section: $secText   Group: $groupText", (pageWidth - 240).toFloat(), yPos, headerPaint)
 
         yPos += 30f

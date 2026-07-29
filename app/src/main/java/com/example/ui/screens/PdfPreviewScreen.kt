@@ -56,6 +56,9 @@ import com.example.util.DateUtils
 import com.example.viewmodel.AttendanceViewModel
 import java.io.File
 
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PdfPreviewScreen(
@@ -70,6 +73,8 @@ fun PdfPreviewScreen(
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
 
+    val selectedSubject by viewModel.selectedSubject.collectAsState()
+
     var exportList by remember { mutableStateOf<List<StudentWithAttendance>>(emptyList()) }
     var generatedPdfFile by remember { mutableStateOf<File?>(null) }
     var isLoading by remember { mutableStateOf(true) }
@@ -77,13 +82,14 @@ fun PdfPreviewScreen(
     val formattedDate = DateUtils.formatDisplayDate(date)
     val dayOfWeek = DateUtils.getDayOfWeek(date)
 
-    LaunchedEffect(date, semester, section, group) {
+    LaunchedEffect(date, selectedSubject, semester, section, group) {
         isLoading = true
         val list = viewModel.getExportList()
         exportList = list
         val pdf = PdfGenerator.generatePdf(
             context = context,
             date = date,
+            subject = selectedSubject,
             semester = semester,
             section = section,
             group = group,
@@ -256,17 +262,17 @@ fun PdfPreviewScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "Section: $secText",
+                                text = "Subject: ${if (selectedSubject.isNotBlank()) selectedSubject else "N/A"}",
                                 style = MaterialTheme.typography.bodySmall.copy(
                                     fontSize = 11.sp,
-                                    fontWeight = FontWeight.SemiBold
+                                    fontWeight = FontWeight.Bold
                                 ),
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+                                color = MaterialTheme.colorScheme.primary,
                                 maxLines = 1,
                                 softWrap = false
                             )
                             Text(
-                                text = "Group: $groupText",
+                                text = "Sec: $secText | Grp: $groupText",
                                 style = MaterialTheme.typography.bodySmall.copy(
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.SemiBold

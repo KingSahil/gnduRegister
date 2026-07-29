@@ -55,16 +55,16 @@ fun AttendanceSummaryCards(
 
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Date Picker Compact Card
+        // Date Picker Compact Card (Pill Shape)
         Card(
             modifier = Modifier
                 .weight(1.3f)
                 .testTag("date_picker_card")
                 .clickable { onOpenDatePicker() },
-            shape = RoundedCornerShape(10.dp),
+            shape = RoundedCornerShape(50.dp),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant
             )
@@ -72,8 +72,9 @@ fun AttendanceSummaryCards(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 10.dp, horizontal = 10.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(vertical = 10.dp, horizontal = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
             ) {
                 Icon(
                     imageVector = Icons.Default.CalendarMonth,
@@ -94,18 +95,18 @@ fun AttendanceSummaryCards(
             }
         }
 
-        // Present Card
+        // Present Card (Pill Shape)
         Card(
             modifier = Modifier
                 .weight(1f)
                 .testTag("present_summary_card"),
-            shape = RoundedCornerShape(10.dp),
+            shape = RoundedCornerShape(50.dp),
             colors = CardDefaults.cardColors(containerColor = presentBg)
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 10.dp, horizontal = 8.dp),
+                    .padding(vertical = 10.dp, horizontal = 12.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -118,7 +119,7 @@ fun AttendanceSummaryCards(
                 Text(
                     text = "$presentCount",
                     style = MaterialTheme.typography.titleMedium.copy(
-                        fontSize = 16.sp,
+                        fontSize = 15.sp,
                         fontWeight = FontWeight.Bold
                     ),
                     color = presentText
@@ -126,18 +127,18 @@ fun AttendanceSummaryCards(
             }
         }
 
-        // Absent Card
+        // Absent Card (Pill Shape)
         Card(
             modifier = Modifier
                 .weight(1f)
                 .testTag("absent_summary_card"),
-            shape = RoundedCornerShape(10.dp),
+            shape = RoundedCornerShape(50.dp),
             colors = CardDefaults.cardColors(containerColor = absentBg)
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 10.dp, horizontal = 8.dp),
+                    .padding(vertical = 10.dp, horizontal = 12.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -150,7 +151,7 @@ fun AttendanceSummaryCards(
                 Text(
                     text = "$absentCount",
                     style = MaterialTheme.typography.titleMedium.copy(
-                        fontSize = 16.sp,
+                        fontSize = 15.sp,
                         fontWeight = FontWeight.Bold
                     ),
                     color = absentText

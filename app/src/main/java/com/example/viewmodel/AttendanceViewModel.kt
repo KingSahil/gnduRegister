@@ -45,12 +45,36 @@ class AttendanceViewModel(
     val sections = listOf("Section A", "Section B", "Section C", "Section D")
     val groups = listOf("All", "Group 1", "Group 2", "Group 3")
 
-    val subjects: StateFlow<List<String>> = subjectRepository.getAllSubjects()
-        .map { list ->
-            val names = list.map { it.name }
-            if (names.isEmpty()) listOf("digital logic", "DSA", "Cpp", "english") else names
+    val subjects: StateFlow<List<String>> = combine(
+        subjectRepository.getAllSubjects(),
+        _selectedSemester
+    ) { allSubjects, sem ->
+        val cleanSem = sem.replace("Sem ", "").trim()
+        val matching = allSubjects.filter {
+            val s = it.semester.replace("Sem ", "").trim()
+            s == cleanSem
+        }.map { it.name }
+
+        if (matching.isNotEmpty()) {
+            matching
+        } else if (cleanSem == "3") {
+            listOf("digital logic", "DSA", "Cpp", "english")
+        } else {
+            emptyList()
         }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), listOf("digital logic", "DSA", "Cpp", "english"))
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), listOf("digital logic", "DSA", "Cpp", "english"))
+
+    init {
+        viewModelScope.launch {
+            subjects.collect { list ->
+                if (list.isNotEmpty() && !list.contains(_selectedSubject.value)) {
+                    _selectedSubject.value = list.first()
+                } else if (list.isEmpty()) {
+                    _selectedSubject.value = ""
+                }
+            }
+        }
+    }
 
     private val _classFilters = combine(_selectedSemester, _selectedSection, _selectedGroup) { sem, sec, grp ->
         Triple(sem, sec, grp)

@@ -3,11 +3,14 @@ package com.example.repository
 import com.example.database.SubjectDao
 import com.example.model.SubjectClass
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class SubjectRepository(
     private val subjectDao: SubjectDao
 ) {
-    fun getAllSubjects(): Flow<List<SubjectClass>> = subjectDao.getAllSubjects()
+    fun getAllSubjects(): Flow<List<SubjectClass>> = subjectDao.getAllSubjects().map { list ->
+        list.distinctBy { Pair(it.name.lowercase().trim(), it.semester.lowercase().trim()) }
+    }
 
     suspend fun addSubject(name: String, semester: String = "Sem 3") {
         if (name.isNotBlank()) {

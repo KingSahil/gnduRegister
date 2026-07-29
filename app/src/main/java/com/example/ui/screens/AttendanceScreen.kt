@@ -199,31 +199,33 @@ fun AttendanceScreen(
                 Spacer(modifier = Modifier.height(6.dp))
             }
 
-            // Sticky Search Bar pinned to top when scrolling
+            // Sticky Search Bar pinned to top when scrolling (Oval / YouTube Style Pill)
             stickyHeader {
                 Surface(
                     color = MaterialTheme.colorScheme.background,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 2.dp)
+                        .padding(vertical = 4.dp)
                 ) {
                     OutlinedTextField(
                         value = searchQuery,
                         onValueChange = { viewModel.setSearchQuery(it) },
                         modifier = Modifier
                             .fillMaxWidth()
+                            .height(50.dp)
                             .testTag("attendance_search_input"),
                         placeholder = { 
                             Text(
-                                "Search by Roll No. or Name...",
-                                style = MaterialTheme.typography.bodySmall.copy(fontSize = 12.sp)
+                                "Search student...",
+                                style = MaterialTheme.typography.bodyMedium.copy(fontSize = 13.sp)
                             ) 
                         },
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Default.Search,
                                 contentDescription = "Search Icon",
-                                modifier = Modifier.size(18.dp)
+                                modifier = Modifier.size(18.dp),
+                                tint = MaterialTheme.colorScheme.primary
                             )
                         },
                         trailingIcon = {
@@ -241,10 +243,12 @@ fun AttendanceScreen(
                             }
                         },
                         singleLine = true,
-                        shape = RoundedCornerShape(10.dp),
+                        shape = RoundedCornerShape(50.dp),
                         colors = OutlinedTextFieldDefaults.colors(
                             unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                            focusedContainerColor = MaterialTheme.colorScheme.surface
+                            focusedContainerColor = MaterialTheme.colorScheme.surface,
+                            unfocusedBorderColor = androidx.compose.ui.graphics.Color.Transparent,
+                            focusedBorderColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
                         )
                     )
                 }

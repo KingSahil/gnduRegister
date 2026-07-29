@@ -217,28 +217,13 @@ fun SettingsScreen(
                 shape = RoundedCornerShape(16.dp),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
             ) {
-                Column {
-                    SettingsNavigationItem(
-                        icon = Icons.Default.Add,
-                        title = "Add Student",
-                        onClick = onNavigateToAddStudent,
-                        testTag = "settings_add_student"
-                    )
-
-                    SettingsNavigationItem(
-                        icon = Icons.Default.Edit,
-                        title = "Update Student",
-                        onClick = onNavigateToManageStudents,
-                        testTag = "settings_update_student"
-                    )
-
-                    SettingsNavigationItem(
-                        icon = Icons.Default.DeleteOutline,
-                        title = "Remove Student",
-                        onClick = onNavigateToManageStudents,
-                        testTag = "settings_remove_student"
-                    )
-                }
+                SettingsNavigationItem(
+                    icon = Icons.Default.Edit,
+                    title = "Edit Students",
+                    subtitle = "Add, update, or remove student records",
+                    onClick = onNavigateToManageStudents,
+                    testTag = "settings_edit_students"
+                )
             }
 
             Spacer(modifier = Modifier.height(24.dp))
