@@ -50,7 +50,7 @@ fun FilterDropdownRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Left-most: Subject / Class Filter Chip
+        // 1. Subject Filter Chip
         FilterChipMenu(
             label = selectedSubject,
             options = subjects,
@@ -58,7 +58,15 @@ fun FilterDropdownRow(
             testTag = "subject_filter_chip"
         )
 
-        // Semester Filter Chip
+        // 2. Group Filter Chip
+        FilterChipMenu(
+            label = selectedGroup,
+            options = groups,
+            onOptionSelected = onGroupSelected,
+            testTag = "group_filter_chip"
+        )
+
+        // 3. Semester Filter Chip
         FilterChipMenu(
             label = selectedSemester,
             options = semesters,
@@ -66,20 +74,12 @@ fun FilterDropdownRow(
             testTag = "semester_filter_chip"
         )
 
-        // Section Filter Chip
+        // 4. Section Filter Chip
         FilterChipMenu(
             label = selectedSection,
             options = sections,
             onOptionSelected = onSectionSelected,
             testTag = "section_filter_chip"
-        )
-
-        // Group Filter Chip
-        FilterChipMenu(
-            label = selectedGroup,
-            options = groups,
-            onOptionSelected = onGroupSelected,
-            testTag = "group_filter_chip"
         )
     }
 }

@@ -1,5 +1,9 @@
 package com.example.ui.screens
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -105,14 +109,26 @@ fun MainScreen(
             startDestination = BottomNavTab.Attendance.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(BottomNavTab.Attendance.route) {
+            composable(
+                route = BottomNavTab.Attendance.route,
+                enterTransition = { slideInHorizontally(initialOffsetX = { -it }) + fadeIn() },
+                exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) + fadeOut() },
+                popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) + fadeIn() },
+                popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) + fadeOut() }
+            ) {
                 AttendanceScreen(
                     viewModel = attendanceViewModel,
                     onNavigateToPdfPreview = onNavigateToPdfPreview
                 )
             }
 
-            composable(BottomNavTab.Settings.route) {
+            composable(
+                route = BottomNavTab.Settings.route,
+                enterTransition = { slideInHorizontally(initialOffsetX = { it }) + fadeIn() },
+                exitTransition = { slideOutHorizontally(targetOffsetX = { it }) + fadeOut() },
+                popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) + fadeIn() },
+                popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) + fadeOut() }
+            ) {
                 SettingsScreen(
                     viewModel = settingsViewModel,
                     onNavigateToManageStudents = onNavigateToManageStudents,
