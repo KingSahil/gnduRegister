@@ -7,12 +7,14 @@ An offline-first, high-performance Android attendance management application cus
 ## 🌟 Key Features
 
 - **⚡ Instant Student Attendance**: Toggle attendance (Present/Absent) with single tap & subtle haptic feedback.
-- **🏷️ Flexible Class Filtering**: Filter students instantly by Semester, Section, Group, or search by Name/Roll Number.
+- **🔍 Sticky Search Bar**: Pinned oval search pill sticks to the top while scrolling through student lists.
+- **🏷️ Intuitive Class Filtering**: Filter students by Subject -> Group -> Semester -> Section with instant updates.
 - **📚 Multi-Subject Management**: Add, edit, or delete custom subjects with assigned default credits/hours.
 - **📅 Attendance History & Editing**: Select any date to view or modify past attendance records easily.
-- **📄 PDF Export & Printing**: Generate official GNDU attendance register sheets with GNDU logo branding, roll call tables, and summary counts ready to print or share.
-- **🎨 Modern Material 3 Theming**: Light/Dark theme support with GNDU Royal Blue accents and optimized contrast colors for Present (`#E8F5E9`) and Absent (`#FFEBEE`) states.
-- **⚡ Pre-warmed Offline Persistence**: Database pre-warming on application startup ensures smooth 60fps scrolling and instant list rendering.
+- **📄 PDF Export & Printing**: Generate official GNDU attendance register sheets with transparent official GNDU logo branding, roll call tables, and summary counts ready to print or share.
+- **✨ Smooth Motion Transitions**: Fluid horizontal slide transitions when switching between Attendance and Settings bottom tabs.
+- **🎨 Modern Material 3 Theming**: Light/Dark theme support with GNDU Royal Blue accents, transparent official emblem branding, and optimized high-contrast state indicators.
+- **⚡ Pre-warmed Offline Persistence & Eager Caching**: Background SQLite connection and flow pre-warming on application startup ensures instant 60fps virtualized scrolling and zero startup lag.
 
 ---
 

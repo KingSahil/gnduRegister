@@ -4,46 +4,39 @@ The user interface of **GNDU Attendance Register** is implemented entirely using
 
 ---
 
-## 📱 Navigation Structure
+## 📱 Navigation Structure & Motion Transitions
 
-Navigation is managed via Jetpack Compose Navigation (`NavHost`) hosted inside `MainActivity.kt`.
+Navigation is managed via Jetpack Compose Navigation (`NavHost`) hosted inside `MainActivity.kt`. Bottom tab navigation between `AttendanceScreen` and `SettingsScreen` features directional horizontal slide and fade transitions (`slideInHorizontally` + `fadeIn`).
 
 ```
                         +--------------------+
                         |    SplashScreen    |
                         +---------+----------+
-                                  | (1.2s timeout)
+                                  | (Initial app launch)
                                   v
                         +--------------------+
                         |     MainScreen     |
                         +----+----------+----+
                              |          |
               +--------------+          +--------------+
-              | (Bottom Navigation)                     |
+              | (Bottom Navigation with Slide Anim)    |
               v                                         v
    +--------------------+                    +-----------------------+
-   |  AttendanceScreen  |                    | ManageStudentsScreen  |
+   |  AttendanceScreen  | <================> |    SettingsScreen     |
    +---------+----------+                    +-----------+-----------+
              |                                           |
-             | (Action: Print PDF)                       | (Action: Add/Edit)
+             | (Action: Print PDF)                       | (Action: Manage Students)
              v                                           v
    +--------------------+                    +-----------------------+
-   |  PdfPreviewScreen  |                    | AddEditStudentScreen  |
+   |  PdfPreviewScreen  |                    | ManageStudentsScreen  |
    +--------------------+                    +-----------------------+
-             |                                           |
-             +--------------------+----------------------+
-                                  |
-                                  v
-                        +--------------------+
-                        |    AboutScreen     |
-                        +--------------------+
 ```
 
 ---
 
 ## 🎨 Material Design 3 Color Palette
 
-Customized for GNDU branding with **GNDU Royal Blue** accents and accessible high-contrast indicators.
+Customized for GNDU branding with **GNDU Royal Blue** accents, transparent official GNDU emblem graphics, and accessible high-contrast indicators.
 
 ### Light Theme Scheme
 - **Primary**: `Color(0xFF005BC1)` (Royal Blue)
@@ -63,9 +56,11 @@ Customized for GNDU branding with **GNDU Royal Blue** accents and accessible hig
 
 ---
 
-## 🧩 Key Composables
+## 🧩 Key Composables & Layout Enhancements
 
-- **`StudentRow`**: Renders individual student cards with animated toggle states, status badges, roll numbers, and haptic feedback.
+- **`StudentRow`**: Renders individual student cards with animated toggle states, status badges, roll numbers, and haptic feedback in a virtualized `LazyColumn`.
+- **`Sticky Search Bar`**: An oval search pill pinned in a Compose `stickyHeader` that remains fixed at the top while scrolling through attendance lists.
+- **`FilterDropdownRow`**: Sequenced filter chips: **Subject** -> **Group** -> **Semester** -> **Section** for rapid class selection.
 - **`SummaryCard`**: Displays live total present/absent count chips with percentage progress indicator.
-- **`GnduLogo`**: Renders the official GNDU emblem from `res/drawable/gndu_logo.png`.
+- **`GnduLogo`**: Renders the transparent official Guru Nanak Dev University logo emblem from `res/drawable/gndu_logo.png` with clean vector fallback.
 - **`PdfPreviewScreen`**: Live print preview of the generated attendance sheet before saving or printing.

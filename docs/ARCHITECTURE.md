@@ -39,9 +39,10 @@ The **GNDU Attendance Register (GnduRegister)** app is engineered following Andr
 - **State flows down**: ViewModels hold single sources of truth exposed via Kotlin `StateFlow` and `Flow`.
 - **Events flow up**: Composables trigger user actions (e.g., `toggleAttendance()`, `updateFilter()`) directly on ViewModel methods.
 
-### 2. Offline-First & Background Pre-Warming
+### 2. Offline-First, Background Pre-Warming & Eager RAM Caching
 - Data is stored locally in an embedded **SQLite Database** managed by **Room**.
-- To prevent UI stutter or first-load latency on application startup, `GnduApplication` pre-warms the SQLite connection on `Dispatchers.IO` during `onCreate()`.
+- To prevent UI stutter or first-load latency on application startup, `GnduApplication` pre-warms the SQLite connection, pre-fetches student indexes, and pre-loads today's attendance data on `Dispatchers.IO` during `onCreate()`.
+- StateFlow streams in `AttendanceViewModel` use `SharingStarted.Eagerly` so filtered student lists and count states are computed in memory before the UI renders.
 
 ### 3. Repository Pattern
 - Repositories encapsulate data access logic and expose reactive Kotlin `Flow` sources to the ViewModels.
