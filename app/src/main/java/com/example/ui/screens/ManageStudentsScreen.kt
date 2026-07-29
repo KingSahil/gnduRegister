@@ -240,7 +240,8 @@ fun ManageStudentsScreen(
                 ) {
                     items(
                         items = studentsList,
-                        key = { it.id }
+                        key = { it.id },
+                        contentType = { "manage_student_row" }
                     ) { student ->
                         ManageStudentRow(
                             student = student,

@@ -274,7 +274,8 @@ fun AttendanceScreen(
             } else {
                 items(
                     items = studentsList,
-                    key = { it.student.id }
+                    key = { it.student.id },
+                    contentType = { "student_attendance_row" }
                 ) { item ->
                     AttendanceStudentRow(
                         item = item,
