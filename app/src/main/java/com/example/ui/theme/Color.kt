@@ -33,9 +33,9 @@ val SurfaceDark = Color(0xFF1B1B20)
 val SurfaceVariantDark = Color(0xFF26252C)
 
 // Custom Attendance State Colors
-val PresentLightBg = Color(0xFFD7F5DD)
+val PresentLightBg = Color(0xFFE8F5E9)
 val PresentLightContent = Color(0xFF1B5E20)
-val AbsentLightBg = Color(0xFFFFDCDD)
+val AbsentLightBg = Color(0xFFFFEBEE)
 val AbsentLightContent = Color(0xFFB71C1C)
 
 val PresentDarkBg = Color(0xFF1A3822)

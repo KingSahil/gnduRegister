@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.graphics.luminance
 import com.example.model.StudentWithAttendance
 import com.example.ui.theme.AbsentDarkBg
 import com.example.ui.theme.AbsentDarkContent
@@ -40,7 +41,7 @@ fun AttendanceStudentRow(
     modifier: Modifier = Modifier
 ) {
     val haptic = LocalHapticFeedback.current
-    val isDark = isSystemInDarkTheme()
+    val isDark = MaterialTheme.colorScheme.background.luminance() < 0.5f
 
     val (bgColor, textColor) = remember(item.isPresent, isDark) {
         if (item.isPresent) {

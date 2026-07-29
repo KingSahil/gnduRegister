@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.graphics.luminance
 import com.example.ui.theme.AbsentDarkBg
 import com.example.ui.theme.AbsentDarkContent
 import com.example.ui.theme.AbsentLightBg
@@ -43,7 +44,7 @@ fun AttendanceSummaryCards(
     absentCount: Int,
     modifier: Modifier = Modifier
 ) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = MaterialTheme.colorScheme.background.luminance() < 0.5f
 
     val presentBg = if (isDark) PresentDarkBg else PresentLightBg
     val presentText = if (isDark) PresentDarkContent else PresentLightContent
