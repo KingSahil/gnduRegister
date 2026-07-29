@@ -41,7 +41,8 @@ fun AttendanceStudentRow(
     modifier: Modifier = Modifier
 ) {
     val haptic = LocalHapticFeedback.current
-    val isDark = MaterialTheme.colorScheme.background.luminance() < 0.5f
+    val bgScheme = MaterialTheme.colorScheme.background
+    val isDark = remember(bgScheme) { bgScheme.luminance() < 0.5f }
 
     val (bgColor, textColor) = remember(item.isPresent, isDark) {
         if (item.isPresent) {

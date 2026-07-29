@@ -92,10 +92,13 @@ fun AttendanceScreen(
     var showHistoryDialog by remember { mutableStateOf(false) }
 
     // Date Picker Dialog setup
-    val calendar = Calendar.getInstance()
-    calendar.timeInMillis = DateUtils.parseDbDateToMillis(selectedDate)
+    val calendar = remember(selectedDate) {
+        Calendar.getInstance().apply {
+            timeInMillis = DateUtils.parseDbDateToMillis(selectedDate)
+        }
+    }
 
-    val datePickerDialog = remember {
+    val datePickerDialog = remember(context, selectedDate) {
         DatePickerDialog(
             context,
             { _, year, month, dayOfMonth ->

@@ -8,7 +8,10 @@ import androidx.room.PrimaryKey
 @Immutable
 @Entity(
     tableName = "students",
-    indices = [Index(value = ["rollNumber"], unique = true)]
+    indices = [
+        Index(value = ["rollNumber"], unique = true),
+        Index(value = ["semester", "section", "group"])
+    ]
 )
 data class Student(
     @PrimaryKey(autoGenerate = true)

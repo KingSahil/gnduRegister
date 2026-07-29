@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface StudentDao {
-    @Query("SELECT * FROM students ORDER BY CAST(rollNumber AS INTEGER) ASC, rollNumber ASC")
+    @Query("SELECT * FROM students ORDER BY LENGTH(rollNumber) ASC, rollNumber ASC")
     fun getAllStudents(): Flow<List<Student>>
 
-    @Query("SELECT * FROM students ORDER BY CAST(rollNumber AS INTEGER) ASC, rollNumber ASC")
+    @Query("SELECT * FROM students ORDER BY LENGTH(rollNumber) ASC, rollNumber ASC")
     suspend fun getAllStudentsList(): List<Student>
 
     @Query("SELECT * FROM students WHERE id = :id")
@@ -29,7 +29,7 @@ interface StudentDao {
         AND (:section = '' OR section = :section)
         AND (:group = '' OR `group` = :group)
         AND (:query = '' OR rollNumber LIKE '%' || :query || '%' OR LOWER(name) LIKE '%' || LOWER(:query) || '%')
-        ORDER BY CAST(rollNumber AS INTEGER) ASC, rollNumber ASC
+        ORDER BY LENGTH(rollNumber) ASC, rollNumber ASC
     """)
     fun getFilteredStudents(
         semester: String,

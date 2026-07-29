@@ -7,7 +7,9 @@ import com.example.repository.SettingsRepository
 import com.example.repository.StudentRepository
 import com.example.repository.SubjectRepository
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 class GnduApplication : Application() {
 
@@ -24,4 +26,14 @@ class GnduApplication : Application() {
         SubjectRepository(database.subjectDao())
     }
     val settingsRepository by lazy { SettingsRepository(this) }
+
+    override fun onCreate() {
+        super.onCreate()
+        // Pre-warm and initialize SQLite database in background thread on app start
+        applicationScope.launch(Dispatchers.IO) {
+            database.studentDao().getStudentCount()
+            database.subjectDao().getSubjectCount()
+        }
+    }
 }
+
