@@ -5,6 +5,7 @@ import com.example.database.AppDatabase
 import com.example.repository.AttendanceRepository
 import com.example.repository.SettingsRepository
 import com.example.repository.StudentRepository
+import com.example.repository.SubjectRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
@@ -18,6 +19,9 @@ class GnduApplication : Application() {
     }
     val attendanceRepository by lazy {
         AttendanceRepository(database.studentDao(), database.attendanceDao())
+    }
+    val subjectRepository by lazy {
+        SubjectRepository(database.subjectDao())
     }
     val settingsRepository by lazy { SettingsRepository(this) }
 }

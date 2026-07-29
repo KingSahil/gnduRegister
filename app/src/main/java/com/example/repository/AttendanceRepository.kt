@@ -13,13 +13,14 @@ class AttendanceRepository(
 ) {
     fun getStudentsWithAttendance(
         date: String,
+        subject: String,
         semester: String,
         section: String,
         group: String,
         query: String
     ): Flow<List<StudentWithAttendance>> {
         val studentsFlow = studentDao.getFilteredStudents(semester, section, group, query)
-        val attendanceFlow = attendanceDao.getAttendanceForDate(date)
+        val attendanceFlow = attendanceDao.getAttendanceForDateAndSubject(date, subject)
 
         return combine(studentsFlow, attendanceFlow) { students, records ->
             val attendanceMap = records.associateBy { it.studentId }
@@ -34,9 +35,9 @@ class AttendanceRepository(
         }
     }
 
-    suspend fun toggleAttendance(studentId: Long, date: String, currentIsPresent: Boolean) {
+    suspend fun toggleAttendance(studentId: Long, date: String, subject: String, currentIsPresent: Boolean) {
         val newIsPresent = !currentIsPresent
-        val existing = attendanceDao.getAttendanceForStudentAndDate(studentId, date)
+        val existing = attendanceDao.getAttendanceForStudentDateAndSubject(studentId, date, subject)
         if (existing != null) {
             attendanceDao.upsertAttendance(
                 existing.copy(present = newIsPresent)
@@ -46,6 +47,7 @@ class AttendanceRepository(
                 AttendanceRecord(
                     studentId = studentId,
                     date = date,
+                    subject = subject,
                     present = newIsPresent
                 )
             )
@@ -57,6 +59,7 @@ class AttendanceRepository(
 
     suspend fun getAttendanceForExport(
         date: String,
+        subject: String,
         semester: String,
         section: String,
         group: String
@@ -66,7 +69,7 @@ class AttendanceRepository(
             (section.isEmpty() || student.section == section) &&
             (group.isEmpty() || student.group == group)
         }
-        val records = attendanceDao.getAttendanceListForDate(date)
+        val records = attendanceDao.getAttendanceListForDateAndSubject(date, subject)
         val attendanceMap = records.associateBy { it.studentId }
 
         return students.map { student ->

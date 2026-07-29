@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.model.StudentWithAttendance
 import com.example.repository.AttendanceRepository
+import com.example.repository.SubjectRepository
 import com.example.util.DateUtils
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,11 +19,15 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class AttendanceViewModel(
-    private val attendanceRepository: AttendanceRepository
+    private val attendanceRepository: AttendanceRepository,
+    private val subjectRepository: SubjectRepository
 ) : ViewModel() {
 
     private val _selectedDate = MutableStateFlow(DateUtils.getTodayDbDate())
     val selectedDate: StateFlow<String> = _selectedDate.asStateFlow()
+
+    private val _selectedSubject = MutableStateFlow("digital logic")
+    val selectedSubject: StateFlow<String> = _selectedSubject.asStateFlow()
 
     private val _selectedSemester = MutableStateFlow("Sem 3")
     val selectedSemester: StateFlow<String> = _selectedSemester.asStateFlow()
@@ -40,33 +45,59 @@ class AttendanceViewModel(
     val sections = listOf("Section A", "Section B", "Section C", "Section D")
     val groups = listOf("All", "Group 1", "Group 2", "Group 3")
 
+    val subjects: StateFlow<List<String>> = subjectRepository.getAllSubjects()
+        .map { list ->
+            val names = list.map { it.name }
+            if (names.isEmpty()) listOf("digital logic", "DSA", "Cpp", "english") else names
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), listOf("digital logic", "DSA", "Cpp", "english"))
+
+    private val _classFilters = combine(_selectedSemester, _selectedSection, _selectedGroup) { sem, sec, grp ->
+        Triple(sem, sec, grp)
+    }
+
     @OptIn(ExperimentalCoroutinesApi::class)
     val studentsWithAttendance: StateFlow<List<StudentWithAttendance>> = combine(
         _selectedDate,
-        _selectedSemester,
-        _selectedSection,
-        _selectedGroup,
+        _selectedSubject,
+        _classFilters,
         _searchQuery
-    ) { date, sem, sec, grp, query ->
-        // Normalize semester code e.g. "Sem 3" -> "3" or "3" -> "Sem 3"
+    ) { date, subject, filters, query ->
+        val (sem, sec, grp) = filters
         val semNumber = sem.replace("Sem ", "").trim()
         val secLetter = sec.replace("Section ", "").trim()
         val grpName = if (grp == "All" || grp == "All Groups") "" else grp.trim()
 
-        Triple(date, Triple(semNumber, secLetter, grpName), query)
-    }.flatMapLatest { (date, filters, query) ->
-        val (sem, sec, grp) = filters
-        attendanceRepository.getStudentsWithAttendance(
+        FilterState(
             date = date,
-            semester = sem,
-            section = sec,
-            group = grp,
+            subject = subject,
+            semester = semNumber,
+            section = secLetter,
+            group = grpName,
             query = query
+        )
+    }.flatMapLatest { state ->
+        attendanceRepository.getStudentsWithAttendance(
+            date = state.date,
+            subject = state.subject,
+            semester = state.semester,
+            section = state.section,
+            group = state.group,
+            query = state.query
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = emptyList()
+    )
+
+    private data class FilterState(
+        val date: String,
+        val subject: String,
+        val semester: String,
+        val section: String,
+        val group: String,
+        val query: String
     )
 
     val presentCount: StateFlow<Int> = studentsWithAttendance.map { list ->
@@ -82,6 +113,10 @@ class AttendanceViewModel(
 
     fun setSelectedDate(date: String) {
         _selectedDate.value = date
+    }
+
+    fun setSelectedSubject(subject: String) {
+        _selectedSubject.value = subject
     }
 
     fun setSelectedSemester(semester: String) {
@@ -105,6 +140,7 @@ class AttendanceViewModel(
             attendanceRepository.toggleAttendance(
                 studentId = studentWithAttendance.student.id,
                 date = _selectedDate.value,
+                subject = _selectedSubject.value,
                 currentIsPresent = studentWithAttendance.isPresent
             )
         }
@@ -116,6 +152,7 @@ class AttendanceViewModel(
         val grpName = if (_selectedGroup.value == "All" || _selectedGroup.value == "All Groups") "" else _selectedGroup.value
         val list = attendanceRepository.getAttendanceForExport(
             date = _selectedDate.value,
+            subject = _selectedSubject.value,
             semester = semNumber,
             section = secLetter,
             group = grpName
@@ -127,10 +164,13 @@ class AttendanceViewModel(
         )
     }
 
-    class Factory(private val repository: AttendanceRepository) : ViewModelProvider.Factory {
+    class Factory(
+        private val attendanceRepository: AttendanceRepository,
+        private val subjectRepository: SubjectRepository
+    ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AttendanceViewModel(repository) as T
+            return AttendanceViewModel(attendanceRepository, subjectRepository) as T
         }
     }
 }

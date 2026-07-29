@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
     private val app by lazy { application as GnduApplication }
 
     private val attendanceViewModel: AttendanceViewModel by viewModels {
-        AttendanceViewModel.Factory(app.attendanceRepository)
+        AttendanceViewModel.Factory(app.attendanceRepository, app.subjectRepository)
     }
 
     private val manageStudentsViewModel: ManageStudentsViewModel by viewModels {
@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private val settingsViewModel: SettingsViewModel by viewModels {
-        SettingsViewModel.Factory(app.settingsRepository)
+        SettingsViewModel.Factory(app.settingsRepository, app.subjectRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

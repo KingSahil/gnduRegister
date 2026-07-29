@@ -69,6 +69,8 @@ fun AttendanceScreen(
     val coroutineScope = rememberCoroutineScope()
 
     val selectedDate by viewModel.selectedDate.collectAsState()
+    val selectedSubject by viewModel.selectedSubject.collectAsState()
+    val subjects by viewModel.subjects.collectAsState()
     val selectedSemester by viewModel.selectedSemester.collectAsState()
     val selectedSection by viewModel.selectedSection.collectAsState()
     val selectedGroup by viewModel.selectedGroup.collectAsState()
@@ -170,6 +172,9 @@ fun AttendanceScreen(
             // Dropdown Filters Row
             item {
                 FilterDropdownRow(
+                    selectedSubject = selectedSubject,
+                    subjects = subjects,
+                    onSubjectSelected = { viewModel.setSelectedSubject(it) },
                     selectedSemester = selectedSemester,
                     semesters = viewModel.semesters,
                     onSemesterSelected = { viewModel.setSelectedSemester(it) },

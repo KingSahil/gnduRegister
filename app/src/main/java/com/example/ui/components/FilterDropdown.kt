@@ -1,9 +1,12 @@
 package com.example.ui.components
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.DropdownMenu
@@ -26,6 +29,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun FilterDropdownRow(
+    selectedSubject: String,
+    subjects: List<String>,
+    onSubjectSelected: (String) -> Unit,
     selectedSemester: String,
     semesters: List<String>,
     onSemesterSelected: (String) -> Unit,
@@ -38,17 +44,26 @@ fun FilterDropdownRow(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier
+            .fillMaxWidth()
+            .horizontalScroll(rememberScrollState()),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        // Left-most: Subject / Class Filter Chip
+        FilterChipMenu(
+            label = selectedSubject,
+            options = subjects,
+            onOptionSelected = onSubjectSelected,
+            testTag = "subject_filter_chip"
+        )
+
         // Semester Filter Chip
         FilterChipMenu(
             label = selectedSemester,
             options = semesters,
             onOptionSelected = onSemesterSelected,
-            testTag = "semester_filter_chip",
-            modifier = Modifier.weight(1f)
+            testTag = "semester_filter_chip"
         )
 
         // Section Filter Chip
@@ -56,8 +71,7 @@ fun FilterDropdownRow(
             label = selectedSection,
             options = sections,
             onOptionSelected = onSectionSelected,
-            testTag = "section_filter_chip",
-            modifier = Modifier.weight(1f)
+            testTag = "section_filter_chip"
         )
 
         // Group Filter Chip
@@ -65,8 +79,7 @@ fun FilterDropdownRow(
             label = selectedGroup,
             options = groups,
             onOptionSelected = onGroupSelected,
-            testTag = "group_filter_chip",
-            modifier = Modifier.weight(1f)
+            testTag = "group_filter_chip"
         )
     }
 }
