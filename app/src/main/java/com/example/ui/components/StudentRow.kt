@@ -34,6 +34,8 @@ import com.example.ui.theme.PresentDarkContent
 import com.example.ui.theme.PresentLightBg
 import com.example.ui.theme.PresentLightContent
 
+private val ItemCornerShape = RoundedCornerShape(10.dp)
+
 @Composable
 fun AttendanceStudentRow(
     item: StudentWithAttendance,
@@ -56,7 +58,7 @@ fun AttendanceStudentRow(
         modifier = modifier
             .fillMaxWidth()
             .testTag("student_row_${item.student.rollNumber}")
-            .clip(RoundedCornerShape(10.dp))
+            .clip(ItemCornerShape)
             .background(bgColor)
             .clickable {
                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
@@ -72,10 +74,9 @@ fun AttendanceStudentRow(
             // Roll Number
             Text(
                 text = item.student.rollNumber,
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 15.sp
-                ),
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Bold,
+                fontSize = 15.sp,
                 color = textColor,
                 modifier = Modifier.width(52.dp)
             )
@@ -85,10 +86,9 @@ fun AttendanceStudentRow(
             // Student Name
             Text(
                 text = item.student.name,
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp
-                ),
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Bold,
+                fontSize = 14.sp,
                 color = textColor,
                 modifier = Modifier.weight(1f)
             )

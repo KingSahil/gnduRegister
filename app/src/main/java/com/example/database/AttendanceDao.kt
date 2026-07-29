@@ -35,4 +35,7 @@ interface AttendanceDao {
 
     @Query("SELECT COUNT(*) FROM attendance_records WHERE date = :date AND subject = :subject AND present = 1")
     fun getPresentCountForDateAndSubject(date: String, subject: String): Flow<Int>
+
+    @Query("SELECT COUNT(*) FROM attendance_records")
+    suspend fun getAttendanceRecordCount(): Int
 }

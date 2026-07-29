@@ -5,9 +5,11 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -52,6 +54,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pdf.PdfGenerator
+import com.example.ui.components.AttendanceStatusFilter
 import com.example.ui.components.AttendanceStudentRow
 import com.example.ui.components.AttendanceSummaryCards
 import com.example.ui.components.FilterDropdownRow
@@ -78,7 +81,8 @@ fun AttendanceScreen(
     val selectedGroup by viewModel.selectedGroup.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
 
-    val studentsList by viewModel.studentsWithAttendance.collectAsState()
+    val statusFilter by viewModel.statusFilter.collectAsState()
+    val studentsList by viewModel.filteredStudentsWithAttendance.collectAsState()
     val presentCount by viewModel.presentCount.collectAsState()
     val absentCount by viewModel.absentCount.collectAsState()
     val historyDates by viewModel.historyDates.collectAsState()
@@ -199,7 +203,9 @@ fun AttendanceScreen(
                     selectedDate = selectedDate,
                     onOpenDatePicker = { datePickerDialog.show() },
                     presentCount = presentCount,
-                    absentCount = absentCount
+                    absentCount = absentCount,
+                    selectedFilter = statusFilter,
+                    onFilterSelected = { filter -> viewModel.setStatusFilter(filter) }
                 )
                 Spacer(modifier = Modifier.height(6.dp))
             }

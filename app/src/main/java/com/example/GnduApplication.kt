@@ -29,10 +29,16 @@ class GnduApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        // Pre-warm and initialize SQLite database in background thread on app start
+        // Pre-warm and initialize SQLite database, indices, and RAM cache on app start
         applicationScope.launch(Dispatchers.IO) {
             database.studentDao().getStudentCount()
+            database.studentDao().getAllStudentsList()
             database.subjectDao().getSubjectCount()
+            database.attendanceDao().getAttendanceRecordCount()
+            database.attendanceDao().getAttendanceListForDateAndSubject(
+                com.example.util.DateUtils.getTodayDbDate(),
+                "digital logic"
+            )
         }
     }
 }

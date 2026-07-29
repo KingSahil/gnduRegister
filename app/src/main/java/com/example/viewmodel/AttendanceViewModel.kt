@@ -18,6 +18,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+import com.example.ui.components.AttendanceStatusFilter
+
 class AttendanceViewModel(
     private val attendanceRepository: AttendanceRepository,
     private val subjectRepository: SubjectRepository
@@ -40,6 +42,9 @@ class AttendanceViewModel(
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
+
+    private val _statusFilter = MutableStateFlow(AttendanceStatusFilter.ALL)
+    val statusFilter: StateFlow<AttendanceStatusFilter> = _statusFilter.asStateFlow()
 
     val semesters = listOf("Sem 1", "Sem 2", "Sem 3", "Sem 4", "Sem 5", "Sem 6", "Sem 7", "Sem 8")
     val sections = listOf("Section A", "Section B", "Section C", "Section D")
@@ -111,7 +116,7 @@ class AttendanceViewModel(
         )
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
+        started = SharingStarted.Eagerly,
         initialValue = emptyList()
     )
 
@@ -124,16 +129,27 @@ class AttendanceViewModel(
         val query: String
     )
 
+    val filteredStudentsWithAttendance: StateFlow<List<StudentWithAttendance>> = combine(
+        studentsWithAttendance,
+        _statusFilter
+    ) { list, filter ->
+        when (filter) {
+            AttendanceStatusFilter.ALL -> list
+            AttendanceStatusFilter.PRESENT -> list.filter { it.isPresent }
+            AttendanceStatusFilter.ABSENT -> list.filter { !it.isPresent }
+        }
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
     val presentCount: StateFlow<Int> = studentsWithAttendance.map { list ->
         list.count { it.isPresent }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, 0)
 
     val absentCount: StateFlow<Int> = studentsWithAttendance.map { list ->
         list.count { !it.isPresent }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, 0)
 
     val historyDates: StateFlow<List<String>> = attendanceRepository.getAttendanceHistoryDates()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     fun setSelectedDate(date: String) {
         _selectedDate.value = date
@@ -157,6 +173,14 @@ class AttendanceViewModel(
 
     fun setSearchQuery(query: String) {
         _searchQuery.value = query
+    }
+
+    fun setStatusFilter(filter: AttendanceStatusFilter) {
+        if (_statusFilter.value == filter) {
+            _statusFilter.value = AttendanceStatusFilter.ALL
+        } else {
+            _statusFilter.value = filter
+        }
     }
 
     fun toggleStudentAttendance(studentWithAttendance: StudentWithAttendance) {
